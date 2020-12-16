@@ -39,7 +39,7 @@ module.exports = function (context) {
             chapter: []
         }
         var allText1 = editor.document.getText()
-        var volumeArr = allText1.match(/第.*?卷 +.*?\r\n/g);
+        var volumeArr = allText1.match(/第.*?卷\s+.*?\r\n/g);
         var volumeObj = catlog[fileName]['volume']
         if (volumeArr) {
             /* 卷内容获取
@@ -63,7 +63,7 @@ module.exports = function (context) {
                     if (index == 0) {
                         var firstVolumnFrontContent = allText1.substring(0, volumeIndex)
                         if (firstVolumnFrontContent.length != 0) {
-                            var firstVolumnFrontContentArr = firstVolumnFrontContent.match(/第.*?章 +.*?\r\n/g);
+                            var firstVolumnFrontContentArr = firstVolumnFrontContent.match(/^.*?第.*?章\s+.*?\r\n/gm);
                             if (firstVolumnFrontContentArr && firstVolumnFrontContentArr.length != 0) {
                                 for (var firstContentIndex in firstVolumnFrontContentArr) {
                                     var firstContentItem = firstVolumnFrontContentArr[firstContentIndex]
@@ -85,7 +85,7 @@ module.exports = function (context) {
                         var volumeTwoIndex = allText1.search(new RegExp(volumeArr[index + 1], "g"))
                         firstVolumnFrontContent = allText1.substring(firstIndex, volumeTwoIndex)
                     }
-                    var firstVolumnFrontContentArr = firstVolumnFrontContent.match(/第.*?章 +.*?\r\n/g);
+                    var firstVolumnFrontContentArr = firstVolumnFrontContent.match(/^.*?第.*?章\s+.*?\r\n/gm);
                     if (firstVolumnFrontContentArr.length != 0) {
                         for (var firstContentIndex in firstVolumnFrontContentArr) {
                             var firstContentItem = firstVolumnFrontContentArr[firstContentIndex]
@@ -106,7 +106,7 @@ module.exports = function (context) {
             }
         } else {
             // 章内容获取
-            var firstVolumnFrontContentArr = allText1.match(/第.*?章 +.*?\r\n/g);
+            var firstVolumnFrontContentArr = allText1.match(/^.*?第.*?章\s+.*?\r\n/gm);
             if (firstVolumnFrontContentArr && firstVolumnFrontContentArr.length != 0) {
                 for (var firstContentIndex in firstVolumnFrontContentArr) {
                     var firstContentItem = firstVolumnFrontContentArr[firstContentIndex]
